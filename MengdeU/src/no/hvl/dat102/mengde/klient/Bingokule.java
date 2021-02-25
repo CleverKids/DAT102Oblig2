@@ -39,21 +39,22 @@ public class Bingokule {
 		result = prime * result + tall;
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object ny) {
 		if (this == ny) {
 			return true;
-		}
-		if (ny == null) {
+		} else if (ny == null) {
 			return false;
-		}
-		if (getClass() != ny.getClass()) {
+
+		} else if (getClass() != ny.getClass()) {
 			return false;
+		} else {
+			// kan fylle ut med mer kode
+			Bingokule b2 = (Bingokule) ny; // Nødvendig typekonvertering
+			return (tall == b2.tall && bokstav == b2.bokstav);
 		}
 
-		Bingokule b2 = (Bingokule) ny; // Nødvendig typekonvertering
-		return (tall == b2.tall && bokstav == b2.bokstav);
 	}
 
 	/**
