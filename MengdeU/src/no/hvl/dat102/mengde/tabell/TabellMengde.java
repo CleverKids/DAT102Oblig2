@@ -6,6 +6,7 @@ import java.util.Random;
 
 import no.hvl.dat102.exception.EmptyCollectionException;
 import no.hvl.dat102.mengde.adt.MengdeADT;
+import no.hvl.dat102.mengde.kjedet.KjedetMengde;
 
 public class TabellMengde<T> implements MengdeADT<T> {
 	// ADT-en Mengde implementert som tabell
@@ -69,7 +70,6 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 	@Override
 	public T fjern(T element) {
-		//TODO
 		// Søker etter og fjerner element. Returnerer null-ref ved ikke-funn
 
 		if (erTom())
@@ -77,9 +77,14 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 		boolean funnet = false;
 		T svar = null;
-		/*
-		 * 
-		 */
+		for(int i=0; (i<antall && !funnet); i++) {
+			if(tab[i].equals(element)) {
+				svar = tab[i];
+				tab[i] = tab[antall-1];
+				antall--;
+				funnet=true;
+			}
+		}
 		return svar;
 	}
 
@@ -110,14 +115,29 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 	@Override
 	public boolean equals(Object m2) {
-		//TODO
 		boolean likeMengder = true;
 		T element;
+		
+		if (this == m2) {
+			return true;
+		}
+		if (m2 == null) {
+			return false;
+		}
+		if (getClass() != m2.getClass()) {
+			return false;
+		} else {
+			MengdeADT<T> mengde2 = (TabellMengde<T>) m2;
+			if (this.antall != mengde2.antall()) {
+				likeMengder = false;
+			} else {
+				likeMengder = true;
 
-		/*
-		 * ...
-		 */
-		return likeMengder;
+				return likeMengder;
+			}
+		}
+		return false;
+
 	}
 
 	@Override
@@ -138,15 +158,18 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	 * (MengdeADT<T>)begge; }
 	 */
 	@Override
-
 	public MengdeADT<T> union(MengdeADT<T> m2) {
-		//TODO
-		MengdeADT<T> begge = new TabellMengde<T>();
-		T element = null;
-		/*
-		 * ...
-		 * 
-		 */
+		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall());
+		TabellMengde<T> andre = (TabellMengde<T>)m2;
+	
+		for (int i =0; i < antall; i++) {
+			begge.leggTil(tab[i]);
+			//((TabellMengde<T>) begge.settInn(tab[i]); settinn fører til like ord i ordlisten vises, meden leggtil lar bare ett av hvert ord komme frem.
+		}
+		for (int i = 0; i<andre.antall(); i++) {
+			begge.leggTil(tab[i]);
+			//((TabellMengde<T>) begge.settInn(tab[i]);
+		}
 		return begge;
 	}//
 
