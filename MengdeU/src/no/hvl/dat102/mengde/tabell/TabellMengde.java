@@ -77,12 +77,12 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 		boolean funnet = false;
 		T svar = null;
-		for(int i=0; (i<antall && !funnet); i++) {
-			if(tab[i].equals(element)) {
+		for (int i = 0; (i < antall && !funnet); i++) {
+			if (tab[i].equals(element)) {
 				svar = tab[i];
-				tab[i] = tab[antall-1];
+				tab[i] = tab[antall - 1];
 				antall--;
-				funnet=true;
+				funnet = true;
 			}
 		}
 		return svar;
@@ -98,7 +98,7 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		}
 		return (funnet);
 	}
-	
+
 	/*
 	 * Når vi overkjører (override) equals- meteoden er det anbefalt at vi også
 	 * overkjører hascode-metoden da en del biblioterker burker hascode sammen med
@@ -117,7 +117,7 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	public boolean equals(Object m2) {
 		boolean likeMengder = true;
 		T element;
-		
+
 		if (this == m2) {
 			return true;
 		}
@@ -160,15 +160,13 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	@Override
 	public MengdeADT<T> union(MengdeADT<T> m2) {
 		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall());
-		TabellMengde<T> andre = (TabellMengde<T>)m2;
-	
-		for (int i =0; i < antall; i++) {
-			begge.leggTil(tab[i]);
-			//((TabellMengde<T>) begge.settInn(tab[i]); settinn fører til like ord i ordlisten vises, meden leggtil lar bare ett av hvert ord komme frem.
+		TabellMengde<T> andre = (TabellMengde<T>) m2;
+
+		for (int i = 0; i < antall; i++) {
+			((TabellMengde<T>) begge).settInn(tab[i]); 
 		}
-		for (int i = 0; i<andre.antall(); i++) {
+		for (int i = 0; i < andre.antall(); i++) {
 			begge.leggTil(tab[i]);
-			//((TabellMengde<T>) begge.settInn(tab[i]);
 		}
 		return begge;
 	}//
@@ -177,32 +175,46 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	public MengdeADT<T> snitt(MengdeADT<T> m2) {
 		MengdeADT<T> snittM = new TabellMengde<T>();
 		T element = null;
-		/*
-		 * ...
-		 */
+		Iterator<T> teller = m2.oppramser();
+
+		while (teller.hasNext()) {
+			element = teller.next();
+			if (this.inneholder(element)) {
+				((TabellMengde<T>) snittM).settInn(element);
+			}
+		}
 		return snittM;
 	}
 
 	@Override
 	public MengdeADT<T> differens(MengdeADT<T> m2) {
-		//TODO
 		MengdeADT<T> differensM = new TabellMengde<T>();
 		T element;
-		/*
-		 * Fyll ut
-		 * 
-		 * if (!m2.inneholder(element)) ((TabellMengde<T>) differensM).settInn(element);
-		 */
+		Iterator<T> teller = this.oppramser();
+
+		while (teller.hasNext()) {
+			element = teller.next();
+			if (!m2.inneholder(element)) {
+				((TabellMengde<T>) differensM).settInn(element);
+			}
+		}
 
 		return differensM;
 	}
 
 	@Override
 	public boolean undermengde(MengdeADT<T> m2) {
-		//TODO
 		boolean erUnderMengde = true;
-		// ...
-		return false;
+		T element;
+		Iterator<T> teller = m2.oppramser();
+
+		while (teller.hasNext() && erUnderMengde) {
+			element = teller.next();
+			if (!this.inneholder(element)) {
+				erUnderMengde = false;
+			}
+		}
+		return erUnderMengde;
 	}
 
 	@Override
@@ -217,5 +229,5 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		tab[antall] = element;
 		antall++;
 	}
-
+	
 }// class
