@@ -168,7 +168,6 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		}
 		return begge;
 	}//
-
 	@Override
 	public MengdeADT<T> snitt(MengdeADT<T> m2) {
 		MengdeADT<T> snittM = new KjedetMengde<T>();
