@@ -158,18 +158,40 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	 * (MengdeADT<T>)begge; }
 	 */
 	@Override
-	public MengdeADT<T> union(MengdeADT<T> m2) {
+	/**public MengdeADT<T> union(MengdeADT<T> m2) {
 		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall());
-		TabellMengde<T> andre = (TabellMengde<T>) m2;
-
-		for (int i = 0; i < antall; i++) {
-			((TabellMengde<T>) begge).settInn(tab[i]); 
+		TabellMengde<T> andre = (TabellMengde<T>)m2;
+	
+		for (int i =0; i < antall; i++) {
+			((TabellMengde<T>) begge).settInn(tab[i]);
 		}
-		for (int i = 0; i < andre.antall(); i++) {
+		for (int i = 0; i<andre.antall(); i++) {
 			begge.leggTil(tab[i]);
 		}
 		return begge;
-	}//
+	}**/
+	 public MengdeADT<T> union(MengdeADT<T> m2) {
+        MengdeADT<T> begge = new TabellMengde<T>();
+        T element = null;
+        
+        Iterator<T> teller = this.oppramser();
+        Iterator<T> tellerM2 = m2.oppramser();
+        
+        int i = 0;
+        while(teller.hasNext() && i < antall) {
+            element = teller.next();
+            ((TabellMengde<T>) begge).settInn(element);
+            i++;
+        }
+        i = 0;
+        while(tellerM2.hasNext() && i < m2.antall())
+        {
+            element = tellerM2.next();
+            begge.leggTil(element);
+            i++;
+        }
+        return begge;
+    }//
 
 	@Override
 	public MengdeADT<T> snitt(MengdeADT<T> m2) {
