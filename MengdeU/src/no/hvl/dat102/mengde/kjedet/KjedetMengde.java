@@ -194,10 +194,14 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 	public MengdeADT<T> differens(MengdeADT<T> m2) {
 		MengdeADT<T> differensM = new KjedetMengde<T>();
 		T element;
-		/*
-		 * Fyll ut
-		 * 
-		 */
+		Iterator<T> teller = this.oppramser();
+		
+		while(teller.hasNext()) {
+			element = teller.next();
+			if(!m2.inneholder(element)) {
+				((KjedetMengde<T>) differensM).settInn(element);
+			}
+		}
 
 		return differensM;
 	}
@@ -205,7 +209,16 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 	@Override
 	public boolean undermengde(MengdeADT<T> m2) {
 		boolean erUnderMengde = true;
-		// Fyll ut
+		T element;
+		Iterator<T> teller = m2.oppramser();
+		
+		while(teller.hasNext() && erUnderMengde) {
+			element = teller.next();
+			if (!this.inneholder(element)) {
+				erUnderMengde = false;
+			}
+		}
+		
 		return erUnderMengde;
 	}
 
