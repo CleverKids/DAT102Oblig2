@@ -6,6 +6,7 @@ import java.util.Random;
 
 import no.hvl.dat102.exception.EmptyCollectionException;
 import no.hvl.dat102.mengde.adt.MengdeADT;
+import no.hvl.dat102.mengde.kjedet.KjedetMengde;
 
 public class TabellMengde<T> implements MengdeADT<T> {
 	// ADT-en Mengde implementert som tabell
@@ -69,17 +70,20 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 	@Override
 	public T fjern(T element) {
-		//TODO
-		// Søker etter og fjerner element. Returnerer null-ref ved ikke-funn
-
 		if (erTom())
 			throw new EmptyCollectionException("mengde");
 
 		boolean funnet = false;
 		T svar = null;
-		/*
-		 * 
-		 */
+		
+		for (int i = 0; (i < antall) && (!funnet); i++) {
+			if (tab[i].equals(element)) {
+				funnet = true;
+				svar = tab[i];
+				antall--;
+			}
+		}
+		
 		return svar;
 	}
 
@@ -110,13 +114,28 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 	@Override
 	public boolean equals(Object m2) {
-		//TODO
+		if(this == m2) {
+			return true;
+		}
+		if(m2 == null){
+			return false;
+		}
+		if(getClass() != m2.getClass()) {
+			return false;
+		}
 		boolean likeMengder = true;
 		T element;
-
-		/*
-		 * ...
-		 */
+		MengdeADT<T> mengde2 = (TabellMengde<T>) m2;
+		if(this.antall != mengde2.antall()) {
+			likeMengder = false;
+		} else {
+			Iterator<T> teller = mengde2.oppramser();
+			while(teller.hasNext() && likeMengder) {
+				element = teller.next();
+				likeMengder = this.inneholder(element);
+			}
+		}
+		
 		return likeMengder;
 	}
 
@@ -138,25 +157,33 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	 * (MengdeADT<T>)begge; }
 	 */
 	@Override
-
 	public MengdeADT<T> union(MengdeADT<T> m2) {
-		//TODO
-		MengdeADT<T> begge = new TabellMengde<T>();
-		T element = null;
-		/*
-		 * ...
-		 * 
-		 */
-		return begge;
+		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall());
+    
+        for (int i =0; i < antall; i++) {
+        	((TabellMengde<T>) begge).settInn(tab[i]); 
+        }
+        
+        Iterator<T> teller = m2.oppramser();
+        while (teller.hasNext()) {
+        	((TabellMengde<T>) begge).settInn(teller.next());
+        }
+        return begge;
 	}//
 
 	@Override
 	public MengdeADT<T> snitt(MengdeADT<T> m2) {
 		MengdeADT<T> snittM = new TabellMengde<T>();
-		T element = null;
-		/*
-		 * ...
-		 */
+		T element;
+		Iterator<T> teller = m2.oppramser();
+		
+		while (teller.hasNext()) {
+			element = teller.next();
+			if (this.inneholder(element)) {
+				((TabellMengde<T>) snittM).settInn(element);
+			}
+		}
+		
 		return snittM;
 	}
 

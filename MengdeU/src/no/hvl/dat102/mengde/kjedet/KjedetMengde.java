@@ -68,19 +68,35 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 
 	@Override
 	public T fjern(T element) {
-
 		if (erTom())
 			throw new EmptyCollectionException("mengde");
-
 		boolean funnet = false;
-		LinearNode<T> forgjenger, aktuell;
+		LinearNode<T> forgjenger = start, aktuell = start;
 		T resultat = null;
-		/*
-		 * Fyll ut
-		 * 
-		 */
+		
+		if(antall == 1) {
+			if(aktuell.getElement().equals(element)) {
+				funnet = true;
+				resultat = aktuell.getElement();
+				antall--;
+				start = null;
+			}
+		}
+		
+		while(!funnet && (aktuell.getNeste() != null)) {
+			aktuell = aktuell.getNeste();
+			if(aktuell.getElement().equals(element)) {
+				resultat = aktuell.getElement();
+				funnet = true;
+				forgjenger.setNeste(aktuell.getNeste());
+				antall--;
+			} else {
+				forgjenger = aktuell;
+			}
+		}
+		
 		return resultat;
-	}//
+	}
 
 	@Override
 	public boolean inneholder(T element) {
@@ -103,7 +119,6 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		}
 		if (ny == null) {
 			return false;
-
 		}
 		if (getClass() != ny.getClass()) {
 			return false;
@@ -140,25 +155,38 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 
 	@Override
 	public MengdeADT<T> union(MengdeADT<T> m2) {
-		MengdeADT<T> begge = new KjedetMengde<T>();
-		LinearNode<T> aktuell = start;
-		T element = null;
+		 MengdeADT<T> begge = new KjedetMengde<T>();
+	        LinearNode<T> aktuell = start;
+	        T element = null;
 
-		/*
-		 * Fyll ut
-		 */
-		return begge;
+	        while (aktuell != null) { 
+	            ((KjedetMengde<T>) begge).settInn(aktuell.getElement());
+	            aktuell = aktuell.getNeste();
+	        }
+
+	        Iterator<T> teller = m2.oppramser();
+	        while (teller.hasNext()) {
+	            element = teller.next();
+	            if (!this.inneholder(element)) { 
+	                ((KjedetMengde<T>) begge).settInn(element);
+	            }
+	        }
+	        return begge;
 	}//
 
 	@Override
 	public MengdeADT<T> snitt(MengdeADT<T> m2) {
 		MengdeADT<T> snittM = new KjedetMengde<T>();
 		T element;
-		/*
-		 * Fyll ut...
-		 * 
-		 * if (this.inneholder(element)) ((KjedetMengde<T>) snittM).settInn(element);
-		 */
+		Iterator<T> teller = m2.oppramser();
+		
+		while (teller.hasNext()) {
+			element = teller.next();
+			if (this.inneholder(element)) {
+				((KjedetMengde<T>) snittM).settInn(element);
+			}
+		}
+		
 		return snittM;
 	}
 
