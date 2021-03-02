@@ -168,7 +168,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 	        while (teller.hasNext()) {
 	            element = teller.next();
 	            if (!this.inneholder(element)) { 
-	                ((KjedetMengde<T>) begge).settInn(element);
+	                ((KjedetMengde<T>) begge).leggTil(element);
 	            }
 	        }
 	        return begge;

@@ -158,16 +158,28 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	 */
 	@Override
 	public MengdeADT<T> union(MengdeADT<T> m2) {
-		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall());
+		Iterator<T> teller = m2.oppramser();
+		int dupes = 0;
+		T element;
+		
+		while(teller.hasNext()) {
+			element = teller.next();
+			if(this.inneholder(element)) {
+				dupes++;
+			}
+		}
+		
+		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall() - dupes);
 
 		for (int i = 0; i < antall; i++) {
 			((TabellMengde<T>) begge).settInn(tab[i]);
 		}
 
-		Iterator<T> teller = m2.oppramser();
-		while (teller.hasNext()) {
-			((TabellMengde<T>) begge).settInn(teller.next());
+		Iterator<T> teller2 = m2.oppramser();
+		while (teller2.hasNext()) {
+			((TabellMengde<T>) begge).settInn(teller2.next());
 		}
+//		begge = trimmeTab(begge, begge.antall());
 		return begge;
 	}//
 
@@ -231,5 +243,16 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		tab[antall] = element;
 		antall++;
 	}
-
+	
+	public MengdeADT<T> trimmeTab(MengdeADT<T> tab, int antallPlasser){
+		MengdeADT<T> nyTab = new TabellMengde<T>(antallPlasser);
+		Iterator<T> teller = tab.oppramser();
+		T element;
+		while(teller.hasNext()) {
+			element = teller.next();
+			nyTab.leggTil(element);
+		}
+		
+		return nyTab;
+	}
 }// class
