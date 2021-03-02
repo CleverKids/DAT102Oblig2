@@ -19,7 +19,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 	public KjedetMengde() {
 		antall = 0;
 		start = null;
-	}//
+	}
 
 	@Override
 	public void leggTil(T element) {
@@ -64,7 +64,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 
 		return resultat;
 
-	}//
+	}
 
 	@Override
 	public T fjern(T element) {
@@ -172,7 +172,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 	            }
 	        }
 	        return begge;
-	}//
+	}
 
 	@Override
 	public MengdeADT<T> snitt(MengdeADT<T> m2) {
@@ -234,4 +234,4 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		antall++;
 	}
 
-}// class
+}

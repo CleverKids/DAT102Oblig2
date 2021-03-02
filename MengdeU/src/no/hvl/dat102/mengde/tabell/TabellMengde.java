@@ -161,14 +161,14 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		Iterator<T> teller = m2.oppramser();
 		int dupes = 0;
 		T element;
-		
-		while(teller.hasNext()) {
+
+		while (teller.hasNext()) {
 			element = teller.next();
-			if(this.inneholder(element)) {
+			if (this.inneholder(element)) {
 				dupes++;
 			}
 		}
-		
+
 		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall() - dupes);
 
 		for (int i = 0; i < antall; i++) {
@@ -177,9 +177,9 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 		Iterator<T> teller2 = m2.oppramser();
 		while (teller2.hasNext()) {
-			((TabellMengde<T>) begge).settInn(teller2.next());
+			((TabellMengde<T>) begge).leggTil(teller2.next());
 		}
-//		begge = trimmeTab(begge, begge.antall());
+
 		return begge;
 	}//
 
@@ -220,14 +220,14 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		boolean erUnderMengde = true;
 		T element;
 		Iterator<T> teller = m2.oppramser();
-		
-		while(teller.hasNext() && erUnderMengde) {
+
+		while (teller.hasNext() && erUnderMengde) {
 			element = teller.next();
 			if (!this.inneholder(element)) {
 				erUnderMengde = false;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -243,16 +243,27 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		tab[antall] = element;
 		antall++;
 	}
-	
-	public MengdeADT<T> trimmeTab(MengdeADT<T> tab, int antallPlasser){
-		MengdeADT<T> nyTab = new TabellMengde<T>(antallPlasser);
-		Iterator<T> teller = tab.oppramser();
-		T element;
-		while(teller.hasNext()) {
-			element = teller.next();
-			nyTab.leggTil(element);
+
+	public String toString() {
+		T element = null;
+		String result = "";
+		Iterator<T> iterator = oppramser();
+		while (iterator.hasNext()) {
+			element = iterator.next();
+			result = result + element + ", ";
 		}
-		
-		return nyTab;
+		return result;
 	}
+
+//	public MengdeADT<T> trimmeTab(MengdeADT<T> tab, int antallPlasser){
+//		MengdeADT<T> nyTab = new TabellMengde<T>(antallPlasser);
+//		Iterator<T> teller = tab.oppramser();
+//		T element;
+//		while(teller.hasNext()) {
+//			element = teller.next();
+//			nyTab.leggTil(element);
+//		}
+//		
+//		return nyTab;
+//	}
 }// class
