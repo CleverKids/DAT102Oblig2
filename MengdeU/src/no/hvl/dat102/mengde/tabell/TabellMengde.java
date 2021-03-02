@@ -254,16 +254,4 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		}
 		return result;
 	}
-
-//	public MengdeADT<T> trimmeTab(MengdeADT<T> tab, int antallPlasser){
-//		MengdeADT<T> nyTab = new TabellMengde<T>(antallPlasser);
-//		Iterator<T> teller = tab.oppramser();
-//		T element;
-//		while(teller.hasNext()) {
-//			element = teller.next();
-//			nyTab.leggTil(element);
-//		}
-//		
-//		return nyTab;
-//	}
-}// class
+}
