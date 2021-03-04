@@ -158,26 +158,15 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	 */
 	@Override
 	public MengdeADT<T> union(MengdeADT<T> m2) {
-		Iterator<T> teller = m2.oppramser();
-		int dupes = 0;
-		T element;
-
-		while (teller.hasNext()) {
-			element = teller.next();
-			if (this.inneholder(element)) {
-				dupes++;
-			}
-		}
-
-		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall() - dupes);
+		MengdeADT<T> begge = new TabellMengde<T>(antall + m2.antall());
 
 		for (int i = 0; i < antall; i++) {
 			((TabellMengde<T>) begge).settInn(tab[i]);
 		}
 
-		Iterator<T> teller2 = m2.oppramser();
-		while (teller2.hasNext()) {
-			((TabellMengde<T>) begge).leggTil(teller2.next());
+		Iterator<T> teller = m2.oppramser();
+		while (teller.hasNext()) {
+			((TabellMengde<T>) begge).leggTil(teller.next());
 		}
 
 		return begge;
