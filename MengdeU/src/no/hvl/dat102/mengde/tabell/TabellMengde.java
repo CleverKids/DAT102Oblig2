@@ -235,12 +235,12 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 	public String toString() {
 		T element = null;
-		String result = "";
+		String result = "<";
 		Iterator<T> iterator = oppramser();
 		while (iterator.hasNext()) {
 			element = iterator.next();
 			result = result + element + ", ";
 		}
-		return result;
+		return result.substring(0, result.length() - 2) + ">";
 	}
 }
